@@ -11,7 +11,8 @@ function App() {
   const [listTitle, setListTitle] = useState(['To-do-List 만들기','블로그 만들기', '노션 업무 일지 작성하기'])
   const [detailTitle, setDetailTitle] = useState(['자바스크립트, yarn, 리액트, 타입스크립트이용하기,','다이어리 작성 하기','오늘의 업무 체크리스트 작성 하기'])
 
-  const [date, setDate] = useState(['23-02-04', '23-02-03']);
+  const [date, setDate] = useState(['23-02-04', '23-02-03', '23-02-01']);
+  const [date2, setDate2] = useState(['', '', '']);
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState(0);
   const [inputVal, setInputVal] = useState('')
@@ -23,6 +24,7 @@ function App() {
   const postDate = `${getYear}-${getMonth}-${getDate}`
 
   const [newDate, setNewDate] = useState(postDate)
+  const [editDate, setEditDate] = useState(postDate)
 
 
 
@@ -72,6 +74,10 @@ function App() {
             editDetail[i] = `${detailVal}`;
             setDetailTitle(editDetail);
 
+            const copyEditDate = [...date2];
+            copyEditDate.unshift(editDate);
+            setDate2(copyEditDate)
+
           }}>edit</button>
           
                         
@@ -85,7 +91,7 @@ function App() {
     }
 
       {
-        modal == true ? <Modal date={date} detailTitle={detailTitle} listTitle={listTitle} title={title} ></Modal>: null
+        modal == true ? <Modal date={date} date2={date2} detailTitle={detailTitle} listTitle={listTitle} title={title} ></Modal>: null
         
       }
 
@@ -125,13 +131,14 @@ function App() {
 
 }
 
-function Modal(props : {listTitle:string[], detailTitle:string[], date:any, title:number}) {
+function Modal(props : {listTitle:string[], detailTitle:string[], date:any, date2:any, title:number}) {
   
   return(
     <div className='modal'>
       <h3>상세내용</h3>      
       <h4>할일제목: {props.listTitle[props.title]}</h4>
       <p>포스트날짜: {props.date[props.title]} </p>
+      <p>수정한 날짜: {props.date2[props.title]} </p>
       <p>할일내용: {props.detailTitle[props.title]}</p>
 
     </div>
