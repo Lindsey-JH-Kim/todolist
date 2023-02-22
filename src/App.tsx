@@ -11,47 +11,58 @@ import dayjs from "dayjs";
 // dayjs.extend(relativeTime) // use plugin
 dayjs.locale("ko"); // use locale
 
-let box: JSX.Element = <div></div>;
+// let box: JSX.Element = <div></div>;
 
 function App() {
   const [listTitle, setListTitle] = useState([
     { title: "To-do-List 만들기", isEdit: false },
-    { title: "To-do-List 만들기", isEdit: false },
-    { title: "To-do-List 만들기", isEdit: false },
+    { title: "블로그 만들기", isEdit: false },
   ]);
   const [detailTitle, setDetailTitle] = useState([
     "자바스크립트, yarn, 리액트, 타입스크립트이용하기,",
     "다이어리 작성 하기",
-    "오늘의 업무 체크리스트 작성 하기",
   ]);
-
-  const [date, setDate] = useState(["23-02-04", "23-02-03", "23-02-01"]);
-  const [date2, setDate2] = useState(["", "", ""]);
-  const [modal, setModal] = useState(false);
   const [title, setTitle] = useState(0);
   const [inputVal, setInputVal] = useState("");
   const [detailVal, setDetailVal] = useState("");
+
+  const [modal, setModal] = useState(false);
+
+  const [date, setDate] = useState(["23-02-04", "23-02-03", "23-02-01"]);
+  const [date2, setDate2] = useState(["", "", ""]);
 
   const getYear = new Date().getFullYear();
   const getMonth = new Date().getMonth() + 1;
   const getDate = new Date().getDate();
   // const postDate = `${getYear}-${getMonth}-${getDate}`
   const postDate = dayjs(new Date()).format("YYYY-MM-DD HH:mm");
-
   const [newDate, setNewDate] = useState(postDate);
   const [editDate, setEditDate] = useState(postDate);
-
-  // const dayjs = require('dayjs')
-  // dayjs().format()
 
   interface IProps {
     index: number;
   }
+
+  const Modal = (props: {
+    listTitle: string[];
+    detailTitle: string[];
+    date: any;
+    date2: any;
+    title: number;
+  }) => {
+    return (
+      <div className="modal">
+        <h3>상세내용</h3>
+        <h4>할일제목: {props.listTitle[props.title]}</h4>
+        <p>포스트날짜: {props.date[props.title]} </p>
+        <p>수정한 날짜: {props.date2[props.title]} </p>
+        <p>할일내용: {props.detailTitle[props.title]}</p>
+      </div>
+    );
+  };
+
   const EditComp = ({ index }: IProps) => {
-    //---------------------------------------------------
-    // 에디트 토글
     const [editToggle, setEditToggle] = useState(false);
-    //---------------------------------------------------
     return (
       <div className="inputEdit">
         <h5 style={{ marginBottom: "5px" }}>수정하기</h5>
@@ -195,31 +206,13 @@ function App() {
         </button>
       </div>
 
-      <script
-        src="
-https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js
-"
-      ></script>
+      <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
     </div>
   );
 }
 
-function Modal(props: {
-  listTitle: string[];
-  detailTitle: string[];
-  date: any;
-  date2: any;
-  title: number;
-}) {
-  return (
-    <div className="modal">
-      <h3>상세내용</h3>
-      <h4>할일제목: {props.listTitle[props.title]}</h4>
-      <p>포스트날짜: {props.date[props.title]} </p>
-      <p>수정한 날짜: {props.date2[props.title]} </p>
-      <p>할일내용: {props.detailTitle[props.title]}</p>
-    </div>
-  );
-}
+//  class형 컴포넌트, 함수형 컴포넌트
+// 함수형 컴포넌트 왜쓰는지
+//
 
 export default App;
